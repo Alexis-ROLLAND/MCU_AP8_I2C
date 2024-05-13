@@ -91,7 +91,20 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     return PCA9633_OK;
  }
  //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_group_control_mode_t *pmode){
+    i2c_err_t   Res;
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE2, &RxBuffer[0]);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    if ( (RxBuffer[0] & DMBLNK_MASK) == DMBLNK_MASK) *pmode = PCA9633_BLINKING_GROUP_CONTROL;
+    else *pmode = PCA9633_DIMMING_GROUP_CONTROL;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
  
+ 
+ //------------------------------------------------------------------------------
  //------------------------------------------------------------------------------
 pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue){
     i2c_err_t   Res;

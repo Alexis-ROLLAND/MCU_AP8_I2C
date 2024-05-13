@@ -30,11 +30,12 @@
  */
 #define MODE1_REG_INIT_VALUE    0x00    /**<  Normal mode, oscillator ON    */
 #define MODE2_REG_INIT_VALUE    0x00    /**< Dimming Group Control, Output logic state not inverted, Output changes on STOP, Output driver as OD */
-#define LEDOUT_REG_INIT_VALUE   0xAA    /**< LED driver x individual brightness can be controlled through its PWMx register. */
+#define LEDOUT_REG_INIT_VALUE   0xFF    /**< LED driver x individual brightness can be controlled through its PWMx register and group dimming/blinking can be controlled through its PWMx register and the GRPPWM registers. */
 
 #define NORMAL_MODE             0x00    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
 #define SLEEP_MODE              0x10    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
 
+#define DMBLNK_MASK             0x20    /**< Mask to access the DMBLNK bit (MODE2[5])   */
 
 typedef enum    {   
     PCA9633_OK,     /**< Success Value          */
@@ -68,6 +69,7 @@ typedef struct {
     } pca9633_pwm_t;
  
 typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
+typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca9633_group_control_mode_t; 
    
 /**
  * @brief       Initializes the PCA9633 device descriptor
@@ -115,6 +117,19 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @return   
  *
  */
+ pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
+ 
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_group_control_mode_t *pmode);
+ 
  
  
  /**
@@ -157,16 +172,6 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
  
  
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
- pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
-         
          
  /**
  * @brief  

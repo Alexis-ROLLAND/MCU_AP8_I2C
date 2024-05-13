@@ -25,7 +25,7 @@
 #define     TEST_SET_PWM                2
 
 
-#define     CURRENT_TEST        TEST_SET_GET_OSC_STATUS
+#define     CURRENT_TEST        TEST_SET_PWM
 //------------------------------------------------------------------------------
 
 
