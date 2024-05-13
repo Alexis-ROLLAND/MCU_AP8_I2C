@@ -1,10 +1,9 @@
 /**
- * @file    Test_lib_pac9633_main.c 
- * @author 	Alexis ROLLAND
- * @date	2022-03
- * @brief 	Test app for PCA9633 driver
+ * @file     
+ * @author 	
+ * @date	
+ * @brief 	
  *  
- *
  */
 
 #include "lib_test_lib_pca9633.h"   // Inclusion du fichier .h "Applicatif" renommé
@@ -34,36 +33,18 @@
 /* Directives de compilation - Macros		*/
 
 /* Déclarations des variables globales 	*/
-extern  pca9633_desc_t  MyPca9633;
+
 
 /* Programme Principal			*/
 
 int main(void)
 {
 // Variables locales au main
-    pca9633_err_t Res = 0;
-    pca9633_pwm_t PwmValues={0,0,0,0};
-    pca9633_osc_status_t  OscStatus;
-
+    
     Initialiser();		// Appel fonction d'initialisation
 
     while(1)
     {
-        __delay_ms(1000);
-                
-        PwmValues.Pwm0 = 0x00;      // Blue
-        PwmValues.Pwm1 = 0x00;      // Green
-        PwmValues.Pwm2 = 0xFF;      // Red
-        
-        Res = pca9633_setPWM(&MyPca9633,&PwmValues);
-        if (Res != PCA9633_OK) error_handler();
-        
-        Res = pca9633_get_osc_status(&MyPca9633, &OscStatus);
-        if (Res != PCA9633_OK) error_handler();
-        
-        if (OscStatus == PCA9633_OSC_IS_ON) Res = pca9633_osc_off(&MyPca9633);
-        else Res = pca9633_osc_on(&MyPca9633);
-        if (Res != PCA9633_OK) error_handler();
-        LATAbits.LATA0 = OscStatus;
+        mainTask();
     }
 }					

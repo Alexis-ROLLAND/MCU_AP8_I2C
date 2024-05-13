@@ -1,8 +1,8 @@
 /**
- * @file    lib_pca9633.h 
- * @author 	Alexis ROLLAND
- * @date	2024-05
- * @brief 	PCA9633 driver
+ * @file    
+ * @author 	
+ * @date	
+ * @brief 	
  */
 
 #ifndef	__LIB_PCA9633_H__
@@ -24,6 +24,16 @@
 #define PCA9633_REG_GRPPWM      0x06
 #define PCA9633_REG_GRPFREQ     0x07
 #define PCA9633_REG_LEDOUT      0x08
+
+/*
+ Masks and reg values
+ */
+#define MODE1_REG_INIT_VALUE    0x00    /**<  Normal mode, oscillator ON    */
+#define MODE2_REG_INIT_VALUE    0x00    /**< Dimming Group Control, Output logic state not inverted, Output changes on STOP, Output driver as OD */
+#define LEDOUT_REG_INIT_VALUE   0xAA    /**< LED driver x individual brightness can be controlled through its PWMx register. */
+
+#define NORMAL_MODE             0x00    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
+#define SLEEP_MODE              0x10    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
 
 
 typedef enum    {   

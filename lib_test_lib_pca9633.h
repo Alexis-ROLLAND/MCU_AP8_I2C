@@ -1,7 +1,7 @@
 /**
  * @file  
- * @author 	Alexis ROLLAND
- * @date	2021-12-30
+ * @author 	
+ * @date	
  * @brief 	
  *  
  *
@@ -19,6 +19,15 @@
 #include "lib_pca9633.h"
 
 #define I2C_MODULE  _I2C1
+
+//------------------------------------------------------------------------------
+#define     TEST_SET_GET_OSC_STATUS     1
+#define     TEST_SET_PWM                2
+
+
+#define     CURRENT_TEST        TEST_SET_GET_OSC_STATUS
+//------------------------------------------------------------------------------
+
 
 /**
  * @brief Global init function/task 
@@ -38,7 +47,7 @@ void Initialiser(void);
  * @return   
  *
  */
-
+void    mainTask(void);
 
 
  /**

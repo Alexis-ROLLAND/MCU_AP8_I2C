@@ -1,6 +1,6 @@
 /**
  * @file 
- * @author 	Alexis ROLLAND
+ * @author 	
  * @date	
  * @brief 	
  */
@@ -36,13 +36,13 @@ pca9633_err_t pca9633_init (pca9633_desc_t *pPca9633, const pca9633_config_t *pP
     pPca9633->pi2c = pPca9633CFG->pi2c;
     pPca9633->i2c_Address = pPca9633CFG->i2c_Address;
     
-    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, 0x00);  /**< Oscillator ON (normal mode), no subcalls */
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, MODE1_REG_INIT_VALUE);  /**< Oscillator ON (normal mode), no subcalls */
     if (Res != I2C_OK) return PCA9633_ERROR;
     
-    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE2, 0x00);  /**< Dimming Group Control, Output logic state not inverted, Output changes on STOP, Output driver as OD */
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE2, MODE2_REG_INIT_VALUE);  /**< Dimming Group Control, Output logic state not inverted, Output changes on STOP, Output driver as OD */
     if (Res != I2C_OK) return PCA9633_ERROR;
     
-    Res = pca9633_write_reg(pPca9633,PCA9633_REG_LEDOUT, 0xAA); /**< LED driver x individual brightness can be controlled through its PWMx register. */
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_LEDOUT, LEDOUT_REG_INIT_VALUE); /**< LED driver x individual brightness can be controlled through its PWMx register. */
     if (Res != I2C_OK) return PCA9633_ERROR;
     
     Res = pca9633_setPWM(pPca9633,&PwmValues);  /**< Set all the four PWM at 0%  */
@@ -68,14 +68,14 @@ pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633, const pca9633_pwm_t
 //------------------------------------------------------------------------------
 pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     i2c_err_t   Res;
-    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, 0x00);
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, NORMAL_MODE);
     if (Res != I2C_OK) return PCA9633_ERROR;
     return PCA9633_OK;
 }
 //------------------------------------------------------------------------------
  pca9633_err_t pca9633_osc_off(const pca9633_desc_t *pPca9633){
     i2c_err_t   Res;
-    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, 0x10);
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, SLEEP_MODE);
     if (Res != I2C_OK) return PCA9633_ERROR;
     return PCA9633_OK;
  }
@@ -85,7 +85,7 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE1, &RxBuffer[0]);
     if (Res != I2C_OK) return PCA9633_ERROR;
     
-    if ( (RxBuffer[0] & 0x10) == 0x10) *pOscStatus = PCA9633_OSC_IS_OFF;
+    if ( (RxBuffer[0] & SLEEP_MODE) == SLEEP_MODE) *pOscStatus = PCA9633_OSC_IS_OFF;
     else *pOscStatus = PCA9633_OSC_IS_ON;
     
     return PCA9633_OK;
