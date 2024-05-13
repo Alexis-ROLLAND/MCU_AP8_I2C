@@ -42,9 +42,9 @@ typedef enum    {
 } pca9633_err_t;
                     
 typedef enum    {   
-    INIT_WITH_I2C1,
-    INIT_WITH_I2C2,
-    INIT_ALREADY_DONE
+    INIT_WITH_I2C1,     /**< Initialize the PCA9633 and I2C1 module    */
+    INIT_WITH_I2C2,     /**< Initialize the PCA9633 and I2C2 module    */
+    INIT_ALREADY_DONE   /**< Initialize the PCA9633 but don't touch I2C module config */
 } pca9633_i2c_init_type_t;
 
 #define BUF_SIZE    16  // Max I2C (Tx/Rx) buffer size                    
@@ -77,10 +77,10 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  *              LED driver x individual brightness can be controlled through 
  *              its PWMx register.
  * 
- * @param[out]  pPca9633        Address of the PAC9633 device descriptor
+ * @param[out]  pPca9633        Address of the PCA9633 device descriptor
  * @param[in]   pPca9633CFG     Address of the PCA9633 init structure	
  * 
- * @return      MAX31855_OK on success
+ * @return      PCA9633_OK on success
  * @return      PCA9633_ERROR on error
  */
  pca9633_err_t pca9633_init (pca9633_desc_t *pPca9633, const pca9633_config_t *pPca9633CFG);
@@ -88,9 +88,9 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  /**
  * @brief       Sets ON or OFF the internal oscillator
  * 
- * @param[in]   pPca9633        Address of the PAC9633 device descriptor   	
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor   	
  * 
- * @return      MAX31855_OK on success
+ * @return      PCA9633_OK on success
  * @return      PCA9633_ERROR on error
  */
  pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633);
@@ -99,32 +99,25 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  /**
  * @brief       Gets the oscillator status of the PCA9633 
  * 
- * @param[in]   pPca9633        Address of the PAC9633 device descriptor 
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor 
  * @param[out]  pOscStatus      Address where to write the status
  * 
- * @return      MAX31855_OK on success
+ * @return      PCA9633_OK on success
  * @return      PCA9633_ERROR on error
  */
  pca9633_err_t pca9633_get_osc_status(const pca9633_desc_t *pPca9633, pca9633_osc_status_t *pOscStatus);
  
  /**
- * @brief  
+ * @brief       Sets the 4 PWM          
  * 
- * @param	
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor
+ * @param[in]   pPwmValues      Address of a pca9633_pwm_t structure holding the 4 values
  * 
- * @return   
- *
+ * @return      PCA9633_OK on success
+ * @return      PCA9633_ERROR on error
  */
+ pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
  
- 
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
  //-----------------------------------------------------------------------------
  //-----------------------------------------------------------------------------
  
@@ -133,11 +126,14 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
   */
   
 /**
- * @brief  
+ * @brief       Writes a byte into a PCA9633 register   
  * 
- * @param	
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor
+ * @param       RegAddr         Address of the PCA9633 target register
+ * @param       RegValue        Value of the byte to be written in the target register
  * 
- * @return  
+ * @return      PCA9633_OK on success
+ * @return      PCA9633_ERROR on error 
  * 
  * @Attention Low Level Function - Should not be used by app 
  *
@@ -145,11 +141,14 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
  
  /**
- * @brief  
+ * @brief       Reads a byte from a PCA9633 register   
  * 
- * @param	
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor
+ * @param       RegAddr         Address of the PCA9633 target register
+ * @param[out]  pRegValue       Address of the byte receiving the register value
  * 
- * @return  
+ * @return      PCA9633_OK on success
+ * @return      PCA9633_ERROR on error 
  * 
  * @Attention Low Level Function - Should not be used by app 
  *
@@ -157,15 +156,7 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
  
  
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
- pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
+ 
          
          
  /**
