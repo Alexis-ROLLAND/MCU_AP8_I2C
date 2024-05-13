@@ -102,9 +102,39 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     return PCA9633_OK;
  }
  //------------------------------------------------------------------------------
- 
+ pca9633_err_t pca9633_set_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_group_control_mode_t mode){
+    i2c_err_t   Res;
+    uint8_t     byte;
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE2, &RxBuffer[0]);  /**< Read the MODE2 register    */
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    if (mode == PCA9633_DIMMING_GROUP_CONTROL) byte = RxBuffer[0] & ~DMBLNK_MASK;   /**< Switch to Dimming mode : DMBLNK <- 0    */ 
+    else byte = RxBuffer[0] | DMBLNK_MASK;   /**< Switch to blinking mode : DMBLNK <- 1    */
+    
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE2, byte);  /**< Rewrite MODE2 register with DMBLK bit correctly set */
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_set_group_duty_cycle(const pca9633_desc_t *pPca9633, uint8_t dutyCyle){
+    i2c_err_t   Res;
+    
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_GRPPWM, dutyCyle); 
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
  
  //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_get_group_duty_cycle(const pca9633_desc_t *pPca9633, uint8_t *pdutyCyle){
+    i2c_err_t   Res;
+    
+    Res = pca9633_read_reg(pPca9633,PCA9633_REG_GRPPWM, pdutyCyle);  
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
  //------------------------------------------------------------------------------
 pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue){
     i2c_err_t   Res;

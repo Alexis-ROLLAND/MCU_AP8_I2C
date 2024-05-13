@@ -30,6 +30,9 @@ void Initialiser(void){
     
     Res = pca9633_init(&MyPca9633,&pcaCfg);
     if (Res != PCA9633_OK) error_handler();
+    
+   
+    
 }
 //------------------------------------------------------------------------------
 #if CURRENT_TEST == TEST_SET_GET_OSC_STATUS
@@ -90,6 +93,61 @@ void    mainTask(void){
     if (Res != PCA9633_OK) error_handler();
 
     LATA = 0x04;    /**< LED5 must be on when  LCD led is blue   */
+}
+#endif
+//------------------------------------------------------------------------------
+#if CURRENT_TEST == TEST_SET_GET_GROUP_CONTROL_MODE
+void    mainTask(void){
+    pca9633_err_t   Res;
+    pca9633_group_control_mode_t mode;
+    
+    __delay_ms(1000);
+    
+    Res = pca9633_get_group_control_mode(&MyPca9633, &mode);
+    if (Res != PCA9633_OK) error_handler();
+    
+    if (mode == PCA9633_DIMMING_GROUP_CONTROL){
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_BLINKING_GROUP_CONTROL);
+        if (Res != PCA9633_OK) error_handler();
+        LATAbits.LATA0 = 1;
+    }
+    else {
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_DIMMING_GROUP_CONTROL);
+        if (Res != PCA9633_OK) error_handler();
+        LATAbits.LATA0 = 0;
+    }
+    
+}
+
+#endif
+//------------------------------------------------------------------------------
+#if CURRENT_TEST == TEST_GET_SET_GRP_DUTY_CYCLE
+const pca9633_pwm_t BlueValues={255,0,0,0};  /**< Global const variable to not overload the stack nor the RAM */
+void    mainTask(void){
+    pca9633_err_t   Res;
+    static uint8_t  doOnce = 0;
+    static uint8_t  alpha = 255;
+    uint8_t ralpha;
+    
+    if (!doOnce){
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_DIMMING_GROUP_CONTROL);
+        if (Res != PCA9633_OK) error_handler();
+        
+        Res = pca9633_setPWM(&MyPca9633,&BlueValues);
+        if (Res != PCA9633_OK) error_handler();
+        
+        doOnce = 1;
+    }
+    
+    __delay_ms(500);
+    Res = pca9633_set_group_duty_cycle(&MyPca9633, alpha--);
+    if (Res != PCA9633_OK) error_handler();
+    
+    Res = pca9633_get_group_duty_cycle(&MyPca9633, &ralpha);
+    if (Res != PCA9633_OK) error_handler();
+    
+    LATA = ralpha;
+    
 }
 #endif
 //------------------------------------------------------------------------------
