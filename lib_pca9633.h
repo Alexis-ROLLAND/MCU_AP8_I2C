@@ -52,7 +52,7 @@ typedef enum    {
 
 typedef struct {
     i2c_desc_t  *pi2c;                      /**< I2C descriptor initialized or not    */
-    pca9633_i2c_init_type_t    initType;   /**< Initializing scheme (with I2C1, with I2C2 or init already done) */
+    pca9633_i2c_init_type_t    initType;    /**< Initializing scheme (with I2C1, with I2C2 or init already done) */
     uint8_t i2c_Address;                    /**< I2C (7bits) Adrress of the PCA9633 device          */
 } pca9633_config_t;                    
 
@@ -66,7 +66,7 @@ typedef struct {
     uint8_t Pwm1;   /**< Value to set to PWM1 channel    */   
     uint8_t Pwm2;   /**< Value to set to PWM2 channel    */   
     uint8_t Pwm3;   /**< Value to set to PWM3 channel    */   
-    } pca9633_pwm_t;
+} pca9633_pwm_t;
  
 typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
 typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca9633_group_control_mode_t; 
@@ -150,6 +150,8 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  * 
  * @return   
  *
+ * @attention :     Dimming mode -> sets the PWM duty Cycle
+ *                  Bliking mode -> sets the blinking duty cycle (Tblinking fixed by pca9633_set_group_freq) 
  */
  pca9633_err_t pca9633_set_group_duty_cycle(const pca9633_desc_t *pPca9633, uint8_t dutyCyle);
  
@@ -162,6 +164,29 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  *
  */
  pca9633_err_t pca9633_get_group_duty_cycle(const pca9633_desc_t *pPca9633, uint8_t *pdutyCyle);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ * @attention : Actual blinking period is ((period + 1) / 24) in seconds
+ */
+ pca9633_err_t pca9633_set_group_freq(const pca9633_desc_t *pPca9633, uint8_t period);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ * @attention : Actual blinking period is ((period + 1) / 24) in seconds
+ */
+ pca9633_err_t pca9633_get_group_freq(const pca9633_desc_t *pPca9633, uint8_t *pperiod);
+ 
  
  //-----------------------------------------------------------------------------
  //-----------------------------------------------------------------------------

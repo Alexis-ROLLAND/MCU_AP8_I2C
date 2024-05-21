@@ -151,6 +151,45 @@ void    mainTask(void){
 }
 #endif
 //------------------------------------------------------------------------------
+#if CURRENT_TEST == TEST_GET_SET_GRP_FREQ
+const pca9633_pwm_t RedValues={0,0,255,0};  /**< Global const variable to not overload the stack nor the RAM */
+void    mainTask(void){
+    pca9633_err_t   Res;
+    static uint8_t  doOnce = 0;
+    static uint8_t  Period = 0;
+    static uint8_t  Alpha = 128;
+    uint8_t rperiod;
+    
+    if (!doOnce){
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_BLINKING_GROUP_CONTROL);
+        if (Res != PCA9633_OK) error_handler();
+        
+        Res = pca9633_setPWM(&MyPca9633,&RedValues);
+        if (Res != PCA9633_OK) error_handler();
+        
+        Res = pca9633_set_group_duty_cycle(&MyPca9633, Alpha);  // Blinking Duty Cycle (50%)
+        if (Res != PCA9633_OK) error_handler();
+        
+        Res = pca9633_set_group_freq(&MyPca9633, Period);       // Blinking Period
+        if (Res != PCA9633_OK) error_handler();
+        
+        doOnce = 1;
+    }
+    
+    __delay_ms(5000);
+    
+    Res = pca9633_set_group_freq(&MyPca9633, Period++);       // Blinking Period
+        if (Res != PCA9633_OK) error_handler();
+    
+    Res = pca9633_get_group_freq(&MyPca9633, &rperiod);
+    if (Res != PCA9633_OK) error_handler();
+    
+    
+    LATA = rperiod;
+    
+}
+#endif
+//------------------------------------------------------------------------------
 void    error_handler(void){
     LATAbits.LATA0 = 0;
     while(1){

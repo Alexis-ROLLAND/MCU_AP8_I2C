@@ -136,6 +136,24 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     return PCA9633_OK;
  }
  //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_set_group_freq(const pca9633_desc_t *pPca9633, uint8_t period){
+    i2c_err_t   Res;
+    
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_GRPFREQ, period); 
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_get_group_freq(const pca9633_desc_t *pPca9633, uint8_t *pperiod){
+    i2c_err_t   Res;
+    
+    Res = pca9633_read_reg(pPca9633,PCA9633_REG_GRPFREQ, pperiod);  
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
 pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue){
     i2c_err_t   Res;
     TxBuffer[0] = RegAddr & 0x0F;   // Clear all auto-increment features
