@@ -6,7 +6,7 @@
  *  
  */
 
-#include "lib_test_lib_pca9633.h"   // Inclusion du fichier .h "Applicatif" renommé
+#include "lib_mcu_ap8.h"   // Inclusion du fichier .h "Applicatif" renommé
 
 /**
  * Insérer Ici les bits de configuration pour le MCU 						  

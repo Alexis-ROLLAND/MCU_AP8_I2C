@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Test_lib_pca9633_main.c lib_i2c_pic24_ll.c lib_pca9633.c lib_test_lib_pca9633.c
+SOURCEFILES_QUOTED_IF_SPACED=lib_i2c_pic24_ll.c lib_pca9633.c lib_mcu_ap8.c MCU_AP8_main.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Test_lib_pca9633_main.o ${OBJECTDIR}/lib_i2c_pic24_ll.o ${OBJECTDIR}/lib_pca9633.o ${OBJECTDIR}/lib_test_lib_pca9633.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Test_lib_pca9633_main.o.d ${OBJECTDIR}/lib_i2c_pic24_ll.o.d ${OBJECTDIR}/lib_pca9633.o.d ${OBJECTDIR}/lib_test_lib_pca9633.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/lib_i2c_pic24_ll.o ${OBJECTDIR}/lib_pca9633.o ${OBJECTDIR}/lib_mcu_ap8.o ${OBJECTDIR}/MCU_AP8_main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/lib_i2c_pic24_ll.o.d ${OBJECTDIR}/lib_pca9633.o.d ${OBJECTDIR}/lib_mcu_ap8.o.d ${OBJECTDIR}/MCU_AP8_main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Test_lib_pca9633_main.o ${OBJECTDIR}/lib_i2c_pic24_ll.o ${OBJECTDIR}/lib_pca9633.o ${OBJECTDIR}/lib_test_lib_pca9633.o
+OBJECTFILES=${OBJECTDIR}/lib_i2c_pic24_ll.o ${OBJECTDIR}/lib_pca9633.o ${OBJECTDIR}/lib_mcu_ap8.o ${OBJECTDIR}/MCU_AP8_main.o
 
 # Source Files
-SOURCEFILES=Test_lib_pca9633_main.c lib_i2c_pic24_ll.c lib_pca9633.c lib_test_lib_pca9633.c
+SOURCEFILES=lib_i2c_pic24_ll.c lib_pca9633.c lib_mcu_ap8.c MCU_AP8_main.c
 
 
 
@@ -89,12 +89,6 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/Test_lib_pca9633_main.o: Test_lib_pca9633_main.c  .generated_files/flags/default/59913743f5177e32866e48b40ed91c0ff3c88b84 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Test_lib_pca9633_main.o.d 
-	@${RM} ${OBJECTDIR}/Test_lib_pca9633_main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Test_lib_pca9633_main.c  -o ${OBJECTDIR}/Test_lib_pca9633_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Test_lib_pca9633_main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/lib_i2c_pic24_ll.o: lib_i2c_pic24_ll.c  .generated_files/flags/default/7ca56829e383bb3690c58805ad2138304442e24 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/lib_i2c_pic24_ll.o.d 
@@ -107,19 +101,19 @@ ${OBJECTDIR}/lib_pca9633.o: lib_pca9633.c  .generated_files/flags/default/4c0b61
 	@${RM} ${OBJECTDIR}/lib_pca9633.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_pca9633.c  -o ${OBJECTDIR}/lib_pca9633.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_pca9633.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/lib_test_lib_pca9633.o: lib_test_lib_pca9633.c  .generated_files/flags/default/42055e758836869f8b66f05833c942ade6bde24a .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/lib_mcu_ap8.o: lib_mcu_ap8.c  .generated_files/flags/default/a2d4d81b069b759aedc625cc8397af9fb9fd57d0 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lib_test_lib_pca9633.o.d 
-	@${RM} ${OBJECTDIR}/lib_test_lib_pca9633.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_test_lib_pca9633.c  -o ${OBJECTDIR}/lib_test_lib_pca9633.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_test_lib_pca9633.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	@${RM} ${OBJECTDIR}/lib_mcu_ap8.o.d 
+	@${RM} ${OBJECTDIR}/lib_mcu_ap8.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_mcu_ap8.c  -o ${OBJECTDIR}/lib_mcu_ap8.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_mcu_ap8.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/MCU_AP8_main.o: MCU_AP8_main.c  .generated_files/flags/default/efd81a3a61e0a3c5913edaeda07428d6f73e52d6 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MCU_AP8_main.o.d 
+	@${RM} ${OBJECTDIR}/MCU_AP8_main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MCU_AP8_main.c  -o ${OBJECTDIR}/MCU_AP8_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/MCU_AP8_main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
-${OBJECTDIR}/Test_lib_pca9633_main.o: Test_lib_pca9633_main.c  .generated_files/flags/default/f4d07b68b69cbfe8df74d62153f761411d3ac35a .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Test_lib_pca9633_main.o.d 
-	@${RM} ${OBJECTDIR}/Test_lib_pca9633_main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  Test_lib_pca9633_main.c  -o ${OBJECTDIR}/Test_lib_pca9633_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Test_lib_pca9633_main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/lib_i2c_pic24_ll.o: lib_i2c_pic24_ll.c  .generated_files/flags/default/1277a9dcfc5164fd186acd95c4f4fc5ba4200c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/lib_i2c_pic24_ll.o.d 
@@ -132,11 +126,17 @@ ${OBJECTDIR}/lib_pca9633.o: lib_pca9633.c  .generated_files/flags/default/cf737d
 	@${RM} ${OBJECTDIR}/lib_pca9633.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_pca9633.c  -o ${OBJECTDIR}/lib_pca9633.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_pca9633.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/lib_test_lib_pca9633.o: lib_test_lib_pca9633.c  .generated_files/flags/default/7b29eab97f553d9e35bb4a67d055b8ee5e599efd .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/lib_mcu_ap8.o: lib_mcu_ap8.c  .generated_files/flags/default/338ab662c7e0024bd39166678202b8289fd470cb .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lib_test_lib_pca9633.o.d 
-	@${RM} ${OBJECTDIR}/lib_test_lib_pca9633.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_test_lib_pca9633.c  -o ${OBJECTDIR}/lib_test_lib_pca9633.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_test_lib_pca9633.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	@${RM} ${OBJECTDIR}/lib_mcu_ap8.o.d 
+	@${RM} ${OBJECTDIR}/lib_mcu_ap8.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  lib_mcu_ap8.c  -o ${OBJECTDIR}/lib_mcu_ap8.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/lib_mcu_ap8.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/MCU_AP8_main.o: MCU_AP8_main.c  .generated_files/flags/default/de37cb1a8218dbc555a9be9fd82ef116af9b5eb9 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MCU_AP8_main.o.d 
+	@${RM} ${OBJECTDIR}/MCU_AP8_main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MCU_AP8_main.c  -o ${OBJECTDIR}/MCU_AP8_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/MCU_AP8_main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

@@ -6,8 +6,8 @@
  *  
  *
  */
-#ifndef	__LIB_APP_TEST_PCA9633_H__
-#define	__LIB_APP_TEST_PCA9633_H__
+#ifndef	__LIB_MACU_AP8_H__
+#define	__LIB_MACU_AP8_H__
 
 #ifndef FCY
 #define FCY 4000000UL
@@ -20,16 +20,15 @@
 
 #define I2C_MODULE  _I2C1
 
-//------------------------------------------------------------------------------
-#define     TEST_SET_GET_OSC_STATUS         1
-#define     TEST_SET_PWM                    2
-#define     TEST_SET_GET_GROUP_CONTROL_MODE 3
-#define     TEST_GET_SET_GRP_DUTY_CYCLE     4
-#define     TEST_GET_SET_GRP_FREQ           5
+#define TEST_SETCOLOR   1
+#define TEST_CN_ISR     2
+#define TEST_TIMER_ISR  3
 
-#define     CURRENT_TEST        TEST_SET_PWM
-//------------------------------------------------------------------------------
+#define FINAL_EXE   TEST_TIMER_ISR   
 
+
+#define ReadCN15()  PORTDbits.RD6
+#define VAL_100MS   50000   
 
 /**
  * @brief Global init function/task 
@@ -75,7 +74,7 @@ void    mainTask(void);
  
 
 
-#endif
+#endif  /*  __LIB_MACU_AP8_H__  */
 
 
 
