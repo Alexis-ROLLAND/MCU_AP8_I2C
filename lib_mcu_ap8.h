@@ -23,11 +23,18 @@
 #define TEST_SETCOLOR   1
 #define TEST_CN_ISR     2
 #define TEST_TIMER_ISR  3
+#define TEST_ADC_ISR    4
+#define APPLICATION     5
 
-#define FINAL_EXE   TEST_TIMER_ISR   
+#define FINAL_EXE   APPLICATION
 
 
 #define ReadCN15()  PORTDbits.RD6
+
+#define StartConversion()       {AD1CON1bits.SAMP = 0;}             // Start Conversion (force end of sample)
+#define clearAcqOK()            {AcqOK = 0;}                        // Clear the software flag associated with AcqOK
+#define setAcqOK()              {AcqOK = 1;}                        // Set the software flag associated with AcqOK
+
 #define VAL_100MS   50000   
 
 /**
