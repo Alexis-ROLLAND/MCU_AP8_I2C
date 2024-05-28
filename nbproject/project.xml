@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>ISIE3_MCU_AP8</name>
-            <creation-uuid>843c3f6a-6838-41fb-a8c3-32af13db6ff5</creation-uuid>
+            <name>Test_libPCA9633</name>
+            <creation-uuid>99ff9497-d365-4ccc-bf23-ce2460738dd1</creation-uuid>
             <make-project-type>0</make-project-type>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
