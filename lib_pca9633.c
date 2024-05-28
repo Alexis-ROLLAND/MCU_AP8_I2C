@@ -67,23 +67,23 @@ pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633, const pca9633_pwm_t
 }
 //------------------------------------------------------------------------------
 pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
-    i2c_err_t   Res;
+    pca9633_err_t   Res;
     Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, NORMAL_MODE);
-    if (Res != I2C_OK) return PCA9633_ERROR;
+    if (Res != PCA9633_OK) return Res;
     return PCA9633_OK;
 }
 //------------------------------------------------------------------------------
  pca9633_err_t pca9633_osc_off(const pca9633_desc_t *pPca9633){
-    i2c_err_t   Res;
+    pca9633_err_t   Res;
     Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE1, SLEEP_MODE);
-    if (Res != I2C_OK) return PCA9633_ERROR;
+    if (Res != PCA9633_OK) return Res;
     return PCA9633_OK;
  }
 //------------------------------------------------------------------------------
  pca9633_err_t pca9633_get_osc_status(const pca9633_desc_t *pPca9633, pca9633_osc_status_t *pOscStatus){
-    i2c_err_t   Res;
+    pca9633_err_t   Res;
     Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE1, &RxBuffer[0]);
-    if (Res != I2C_OK) return PCA9633_ERROR;
+    if (Res != PCA9633_OK) return Res;
     
     if ( (RxBuffer[0] & SLEEP_MODE) == SLEEP_MODE) *pOscStatus = PCA9633_OSC_IS_OFF;
     else *pOscStatus = PCA9633_OSC_IS_ON;
