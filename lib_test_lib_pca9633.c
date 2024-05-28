@@ -139,7 +139,7 @@ void    mainTask(void){
         doOnce = 1;
     }
     
-    __delay_ms(500);
+    __delay_ms(200);
     Res = pca9633_set_group_duty_cycle(&MyPca9633, alpha--);
     if (Res != PCA9633_OK) error_handler();
     
