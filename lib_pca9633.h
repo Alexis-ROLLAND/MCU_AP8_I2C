@@ -138,7 +138,7 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
+ extern pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
  
  /**
  * @brief       Reads a byte from a PCA9633 register   
@@ -153,20 +153,8 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
+ extern pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
  
- 
- 
-         
-         
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
  
  
 
