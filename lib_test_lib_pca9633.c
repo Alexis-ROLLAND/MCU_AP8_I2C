@@ -151,10 +151,10 @@ void    mainTask(void){
 }
 #endif
 //------------------------------------------------------------------------------
-#if CURRENT_TEST == TEST_GET_SET_GRP_FREQ
+#if CURRENT_TEST == TEST_GET_SET_GRP_FREQ 
 const pca9633_pwm_t RedValues={0,0,255,0};  /**< Global const variable to not overload the stack nor the RAM */
 void    mainTask(void){
-    pca9633_err_t   Res;
+    pca9633_err_t   Res; 
     static uint8_t  doOnce = 0;
     static uint8_t  Period = 0;
     static uint8_t  Alpha = 128;

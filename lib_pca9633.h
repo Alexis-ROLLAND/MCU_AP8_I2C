@@ -52,7 +52,7 @@ typedef enum    {
 
 typedef struct {
     i2c_desc_t  *pi2c;                      /**< I2C descriptor initialized or not    */
-    pca9633_i2c_init_type_t    initType;    /**< Initializing scheme (with I2C1, with I2C2 or init already done) */
+    pca9633_i2c_init_type_t    initType;   /**< Initializing scheme (with I2C1, with I2C2 or init already done) */
     uint8_t i2c_Address;                    /**< I2C (7bits) Adrress of the PCA9633 device          */
 } pca9633_config_t;                    
 
@@ -66,7 +66,7 @@ typedef struct {
     uint8_t Pwm1;   /**< Value to set to PWM1 channel    */   
     uint8_t Pwm2;   /**< Value to set to PWM2 channel    */   
     uint8_t Pwm3;   /**< Value to set to PWM3 channel    */   
-} pca9633_pwm_t;
+    } pca9633_pwm_t;
  
 typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
 typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca9633_group_control_mode_t; 
@@ -79,7 +79,7 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  *              LED driver x individual brightness can be controlled through 
  *              its PWMx register.
  * 
- * @param[out]  pPca9633        Address of the PAC9633 device descriptor
+ * @param[out]  pPca9633        Address of the PCA9633 device descriptor
  * @param[in]   pPca9633CFG     Address of the PCA9633 init structure	
  * 
  * @return      PCA9633_OK on success
@@ -90,7 +90,7 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  /**
  * @brief       Sets ON or OFF the internal oscillator
  * 
- * @param[in]   pPca9633        Address of the PAC9633 device descriptor   	
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor   	
  * 
  * @return      PCA9633_OK on success
  * @return      PCA9633_ERROR on error
@@ -101,7 +101,7 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  /**
  * @brief       Gets the oscillator status of the PCA9633 
  * 
- * @param[in]   pPca9633        Address of the PAC9633 device descriptor 
+ * @param[in]   pPca9633        Address of the PCA9633 device descriptor 
  * @param[out]  pOscStatus      Address where to write the status
  * 
  * @return      PCA9633_OK on success
@@ -119,7 +119,6 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  * @return      PCA9633_ERROR on error
  */
  pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
- 
  
  /**
  * @brief       Gets the group control mode (dimming or blinking)  
@@ -186,8 +185,6 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  * @attention : Actual blinking period is ((period + 1) / 24) in seconds
  */
  pca9633_err_t pca9633_get_group_freq(const pca9633_desc_t *pPca9633, uint8_t *pperiod);
- 
- 
  //-----------------------------------------------------------------------------
  //-----------------------------------------------------------------------------
  
@@ -208,7 +205,7 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
+ extern pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
  
  /**
  * @brief       Reads a byte from a PCA9633 register   
@@ -223,18 +220,8 @@ typedef enum {PCA9633_DIMMING_GROUP_CONTROL, PCA9633_BLINKING_GROUP_CONTROL} pca
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
+ extern pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
  
- 
-         
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
  
  
 

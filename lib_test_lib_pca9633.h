@@ -27,7 +27,7 @@
 #define     TEST_GET_SET_GRP_DUTY_CYCLE     4
 #define     TEST_GET_SET_GRP_FREQ           5
 
-#define     CURRENT_TEST        TEST_GET_SET_GRP_DUTY_CYCLE
+#define     CURRENT_TEST        TEST_SET_GET_OSC_STATUS
 //------------------------------------------------------------------------------
 
 

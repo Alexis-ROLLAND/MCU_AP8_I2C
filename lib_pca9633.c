@@ -91,7 +91,7 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     return PCA9633_OK;
  }
  //------------------------------------------------------------------------------
- pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_group_control_mode_t *pmode){
+  pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_group_control_mode_t *pmode){
     pca9633_err_t   Res;
     Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE2, &RxBuffer[0]);
     if (Res != PCA9633_OK) return Res;
