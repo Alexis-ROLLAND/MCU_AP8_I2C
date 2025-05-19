@@ -1,6 +1,6 @@
 /**
- * @file 
- * @author 	
+ * @file  
+ * @author  Alexis ROLLAND 	
  * @date	
  * @brief 	
  */
