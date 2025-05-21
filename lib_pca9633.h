@@ -30,11 +30,13 @@
  */
 #define MODE1_REG_INIT_VALUE    0x00    /**<  Normal mode, oscillator ON    */
 #define MODE2_REG_INIT_VALUE    0x00    /**< Dimming Group Control, Output logic state not inverted, Output changes on STOP, Output driver as OD */
-#define LEDOUT_REG_INIT_VALUE   0xAA    /**< LED driver x individual brightness can be controlled through its PWMx register. */
+#define LEDOUT_REG_INIT_VALUE   0xFF    /**< LED driver x individual brightness can be controlled through its PWMx register and the GRPPWM registers. */
 
 #define NORMAL_MODE             0x00    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
 #define SLEEP_MODE              0x10    /**< Mode control bit is bit4 (SLEEP) os MODE1 register */
 
+#define BLINKING_MODE           (1<<5)  /**< Blinking / Dimming mode is Blinking   */
+#define DIMMING_MODE            0x00    /**< Blinking / Dimming mode is Dimming   */
 
 typedef enum    {   
     PCA9633_OK,     /**< Success Value          */
@@ -68,7 +70,9 @@ typedef struct {
     } pca9633_pwm_t;
  
 typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
-   
+typedef enum {PCA9633_DIMMING_MODE, PCA9633_BLINKING_MODE} pca9633_db_mode_t;   
+
+
 /**
  * @brief       Initializes the PCA9633 device descriptor
  *              Init state is osc PCA9633 Powered on, no SUB or ALL calls, 
@@ -115,7 +119,7 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @return   
  *
  */
- 
+ pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
  
  /**
  * @brief  
@@ -125,6 +129,59 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @return   
  *
  */
+ pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_db_mode_t *pMode);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t pca9633_set_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_db_mode_t Mode);
+
+
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t  pca9633_set_group_duty_cycle(const pca9633_desc_t *pPca9633,uint8_t group_duty_cycle);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t  pca9633_get_group_duty_cycle(const pca9633_desc_t *pPca9633,uint8_t *pgroup_duty_cycle);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t  pca9633_set_group_freq(const pca9633_desc_t *pPca9633,uint8_t group_freq);
+ 
+ /**
+ * @brief  
+ * 
+ * @param	
+ * 
+ * @return   
+ *
+ */
+ pca9633_err_t  pca9633_get_group_freq(const pca9633_desc_t *pPca9633,uint8_t *pgroup_freq);
+ 
  //-----------------------------------------------------------------------------
  //-----------------------------------------------------------------------------
  
@@ -142,7 +199,7 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
+ static pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue);
  
  /**
  * @brief  
@@ -154,18 +211,9 @@ typedef enum {PCA9633_OSC_IS_ON, PCA9633_OSC_IS_OFF} pca9633_osc_status_t;
  * @Attention Low Level Function - Should not be used by app 
  *
  */
- pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
+ static pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue);
  
  
- /**
- * @brief  
- * 
- * @param	
- * 
- * @return   
- *
- */
- pca9633_err_t pca9633_setPWM(const pca9633_desc_t *pPca9633,const pca9633_pwm_t *pPwmValues);
          
          
  /**

@@ -92,6 +92,104 @@ void    mainTask(void){
     LATA = 0x04;    /**< LED5 must be on when  LCD led is blue   */
 }
 #endif
+
+//------------------------------------------------------------------------------
+#if CURRENT_TEST == TEST_SET_GET_GROUP_CONTROL_MODE
+void    mainTask(void){
+    pca9633_err_t   Res;
+    pca9633_db_mode_t GroupMode;
+    
+    __delay_ms(1000);
+    
+    Res = pca9633_get_group_control_mode(&MyPca9633, &GroupMode);   /**< Get Group Mode */
+    if (Res != PCA9633_OK) error_handler();
+    
+    if (GroupMode == PCA9633_DIMMING_MODE){
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_BLINKING_MODE);
+        if (Res != PCA9633_OK) error_handler();
+        LATAbits.LATA0 = 1;
+    }
+    else{
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_DIMMING_MODE);
+        if (Res != PCA9633_OK) error_handler();
+        LATAbits.LATA0 = 0;
+    }
+    
+}
+#endif
+
+#if CURRENT_TEST == TEST_GET_SET_GRP_DUTY_CYCLE
+pca9633_pwm_t PwmValues={0,0,0,0};  /**< Global variable to not overload the stack  */
+void    mainTask(void){
+    pca9633_err_t   Res;
+    static uint8_t FirstLoop = 1;
+    static uint8_t dimm_value = 0;
+    uint8_t tmp;
+    
+    if (FirstLoop){
+        Res = pca9633_set_group_control_mode(&MyPca9633, PCA9633_DIMMING_MODE);
+        if (Res != PCA9633_OK) error_handler();
+
+        PwmValues.Pwm0 = 0xFF;      // Blue
+        PwmValues.Pwm1 = 0xFF;      // Green
+        PwmValues.Pwm2 = 0xFF;      // Red
+
+        Res = pca9633_setPWM(&MyPca9633,&PwmValues);
+        if (Res != PCA9633_OK) error_handler();
+        
+        FirstLoop = 0;
+    }
+    
+    __delay_ms(50);
+    dimm_value++;
+    LATA = dimm_value;
+        
+    Res = pca9633_set_group_duty_cycle(&MyPca9633,dimm_value);
+    if (Res != PCA9633_OK) error_handler();
+    
+    Res = pca9633_get_group_duty_cycle(&MyPca9633,&tmp);
+    if (Res != PCA9633_OK) error_handler();
+    
+    if (tmp != dimm_value) error_handler();
+}
+#endif
+
+#if     CURRENT_TEST == TEST_GET_SET_GRP_FREQ
+pca9633_pwm_t PwmValues={0,0,0,0};  /**< Global variable to not overload the stack  */
+void    mainTask(void){
+    pca9633_err_t   Res;
+    static uint8_t FirstLoop = 1;
+    uint8_t freq_value = 23;
+    
+    
+    if (FirstLoop){
+        Res = pca9633_set_group_control_mode(&MyPca9633,PCA9633_BLINKING_MODE);
+        if (Res != PCA9633_OK) error_handler();
+ 
+        
+        PwmValues.Pwm0 = 0xFF;      // Blue
+        PwmValues.Pwm1 = 0xFF;      // Green
+        PwmValues.Pwm2 = 0xFF;      // Red
+
+        Res = pca9633_setPWM(&MyPca9633,&PwmValues);
+        if (Res != PCA9633_OK) error_handler();
+        
+        
+        Res = pca9633_set_group_duty_cycle(&MyPca9633,64);  /**< 25% duty cycle */
+        if (Res != PCA9633_OK) error_handler();
+    
+        Res = pca9633_set_group_freq(&MyPca9633,freq_value);  
+        if (Res != PCA9633_OK) error_handler();
+
+        FirstLoop = 0;
+    }
+    
+}
+    
+    
+
+
+#endif
 //------------------------------------------------------------------------------
 void    error_handler(void){
     LATAbits.LATA0 = 0;
@@ -100,3 +198,4 @@ void    error_handler(void){
         __delay_ms(50);
     }
 }
+    

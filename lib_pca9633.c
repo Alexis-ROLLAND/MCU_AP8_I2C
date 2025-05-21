@@ -91,9 +91,72 @@ pca9633_err_t pca9633_osc_on(const pca9633_desc_t *pPca9633){
     return PCA9633_OK;
  }
  //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_get_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_db_mode_t *pMode){
+     
+    i2c_err_t   Res;
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE2, &RxBuffer[0]);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    if ( (RxBuffer[0] & BLINKING_MODE) == BLINKING_MODE) *pMode = PCA9633_BLINKING_MODE;
+    else *pMode = PCA9633_DIMMING_MODE;
+     
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t pca9633_set_group_control_mode(const pca9633_desc_t *pPca9633, pca9633_db_mode_t Mode){
+    i2c_err_t   Res;
+    
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_MODE2, &RxBuffer[0]);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    if (Mode == PCA9633_BLINKING_MODE) RxBuffer[0] |= BLINKING_MODE;
+    else RxBuffer[0] &= ~BLINKING_MODE;
+ 
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_MODE2, RxBuffer[0]);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t  pca9633_set_group_duty_cycle(const pca9633_desc_t *pPca9633,uint8_t group_duty_cycle){
+    i2c_err_t   Res;
+ 
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_GRPPWM, group_duty_cycle);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t  pca9633_get_group_duty_cycle(const pca9633_desc_t *pPca9633,uint8_t *pgroup_duty_cycle){
+    i2c_err_t   Res;
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_GRPPWM, pgroup_duty_cycle);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+ 
+    return PCA9633_OK;
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t  pca9633_set_group_freq(const pca9633_desc_t *pPca9633,uint8_t group_freq){
+    i2c_err_t   Res;
+ 
+    Res = pca9633_write_reg(pPca9633,PCA9633_REG_GRPFREQ, group_freq);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+    
+    return PCA9633_OK;     
+ }
+ //------------------------------------------------------------------------------
+ pca9633_err_t  pca9633_get_group_freq(const pca9633_desc_t *pPca9633,uint8_t *pgroup_freq){
+    i2c_err_t   Res;
+    Res =  pca9633_read_reg(pPca9633,PCA9633_REG_GRPFREQ, pgroup_freq);
+    if (Res != I2C_OK) return PCA9633_ERROR;
+ 
+    return PCA9633_OK;
+ }
+ 
+ 
+ 
  
  //------------------------------------------------------------------------------
-pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue){
+static pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t RegValue){
     i2c_err_t   Res;
     TxBuffer[0] = RegAddr & 0x0F;   // Clear all auto-increment features
     TxBuffer[1] = RegValue;
@@ -104,7 +167,7 @@ pca9633_err_t pca9633_write_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, 
     return PCA9633_OK;
 }
 //------------------------------------------------------------------------------        
-pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue){
+static pca9633_err_t pca9633_read_reg(const pca9633_desc_t *pPca9633,uint8_t RegAddr, uint8_t *pRegValue){
     i2c_err_t   Res;
     TxBuffer[0] = RegAddr & 0x0F;   // Clear all auto-increment features
     
